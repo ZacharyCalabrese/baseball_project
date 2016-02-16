@@ -83,7 +83,6 @@ def add_home_runs_to_game(game, home_run_object):
     def add_home_run_to_game(home_run):
         new_home_run = HomeRun()
         setattr(new_home_run, 'game', game)
-        #new_home_run = game.homerun_set.create()
         for k, v in home_run.iteritems():
             print k, v
             if k in home_run_field_names and k != 'id':
