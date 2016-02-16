@@ -3,8 +3,8 @@ from __future__ import unicode_literals
 from django.db import models
 
 class Game(models.Model):
-    game_type = models.CharField(max_length=1, )
-    double_header_sw = models.CharField(max_length=1, )
+    game_type = models.CharField(max_length=5, )
+    double_header_sw = models.CharField(max_length=5, )
     location = models.TextField(max_length=100, )
     away_time = models.TimeField()
     time = models.TimeField()
@@ -17,23 +17,23 @@ class Game(models.Model):
     # Foreign reference eventually
     venue_id = models.IntegerField(null=True)
     gameday_sw = models.CharField(max_length=1)
-    away_win = models.IntegerField()
-    home_games_back_wildcard = models.CharField(max_length=5, )
+    away_win = models.IntegerField(default=0, null=False)
+    home_games_back_wildcard = models.CharField(max_length=5, null=True)
 
     # Foreign reference eventually
-    away_team_id = models.IntegerField()
-    home_loss = models.IntegerField()
-    home_games_back = models.CharField(max_length=5, )
+    away_team_id = models.IntegerField(null=True)
+    home_loss = models.IntegerField(default=0, null=False)
+    home_games_back = models.CharField(max_length=5, null=True)
     home_code = models.CharField(max_length=3, null=True)
-    home_win = models.IntegerField()
+    home_win = models.IntegerField(default=0, null=False)
 
     time_hm_lg = models.TimeField(null=True)
     away_name_abbrev = models.CharField(max_length=5, null=True)
     league = models.CharField(max_length=5, null=True)
     away_games_back = models.CharField(max_length=5, null=True)
     home_file_code = models.CharField(max_length=5, null=True)
-    away_split_squad = models.CharField(max_length=1, null=True)
-    time_zone = models.CharField(max_length=2, null=True)
+    away_split_squad = models.CharField(max_length=5, null=True)
+    time_zone = models.CharField(max_length=5, null=True)
     home_team_id = models.IntegerField()
     day = models.CharField(max_length=3, null=True)
     time_aw_lg = models.TimeField()
@@ -44,20 +44,20 @@ class Game(models.Model):
     first_pitch_et = models.TimeField(null=True)
     away_team_name = models.TextField(max_length=100)
     home_name_abbrev = models.CharField(max_length=5, null=True)
-    ampm = models.CharField(max_length=2, null=True)
-    home_division = models.CharField(max_length=2, null=True)
-    home_split_squad = models.CharField(max_length=1, null=True)
-    home_time_zone = models.CharField(max_length=2, null=True)
-    away_time_zone = models.CharField(max_length=2, null=True)
-    hm_lg_ampm = models.CharField(max_length=2, null=True)
-    home_ampm = models.CharField(max_length=2, null=True)
+    ampm = models.CharField(max_length=5, null=True)
+    home_division = models.CharField(max_length=5, null=True)
+    home_split_squad = models.CharField(max_length=5, null=True)
+    home_time_zone = models.CharField(max_length=5, null=True)
+    away_time_zone = models.CharField(max_length=5, null=True)
+    hm_lg_ampm = models.CharField(max_length=5, null=True)
+    home_ampm = models.CharField(max_length=5, null=True)
     venue = models.TextField(max_length=100)
     away_loss = models.IntegerField()
     resume_date = models.DateField(null=True)
     away_file_code = models.CharField(max_length=5, null=True)
-    aw_lg_ampm = models.CharField(max_length=2, null=True)
-    away_ampm = models.CharField(max_length=2, null=True)
-    away_division = models.CharField(max_length=2, null=True)
+    aw_lg_ampm = models.CharField(max_length=5, null=True)
+    away_ampm = models.CharField(max_length=5, null=True)
+    away_division = models.CharField(max_length=5, null=True)
 
 
     #losing pitcher
@@ -65,5 +65,17 @@ class Game(models.Model):
     #linescore
     #winning pitcher
     #save pitcher
-    #broadcast
-    #status
+    #broadcast#status
+
+class HomeRun(models.Model):
+    std_hr = models.IntegerField(null=True)
+    hr = models.IntegerField(null=True)
+    last = models.TextField(max_length=200)
+    team_code = models.CharField(max_length=3, null=True)
+    inning = models.IntegerField(null=True)
+    runners = models.IntegerField(default=0, null=True)
+    number = models.IntegerField(null=True)
+    name_display_roster = models.TextField(max_length=200, null=True)
+    first = models.TextField(max_length=200, null=True)
+
+    game = models.ForeignKey(Game, on_delete=models.CASCADE)
