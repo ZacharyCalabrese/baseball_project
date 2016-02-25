@@ -15,7 +15,10 @@ Including another URLconf
 """
 from django.conf.urls import url
 from django.contrib import admin
+from games import views
 
 urlpatterns = [
+    url(r'^$', views.home_page, name='games'),
+    url(r'^games/search/', views.search, name='games'),
     url(r'^admin/', admin.site.urls),
 ]

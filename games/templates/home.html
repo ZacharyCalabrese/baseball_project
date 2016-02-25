@@ -1,0 +1,49 @@
+{% load render_table from django_tables2 %}
+{% load staticfiles %}
+
+{# Load the tag library #}
+{% load bootstrap3 %}
+
+{# Load CSS and JavaScript #}
+{% bootstrap_css %}
+{% bootstrap_javascript %}
+
+{# Display django.contrib.messages as Bootstrap alerts #}
+{% bootstrap_messages %}
+
+<!doctype html>
+<html>
+    <head>
+        <title>Games</title>
+    </head>
+    <body>
+        <div class="container-fluid">
+            <div class="col-sm-3 col-md-6">
+                {% if search_error %}
+                    <p style ="color: red;">Please submit a valid team name</p>
+                {% endif %}
+                <form action="/games/search/" method="get">
+                    {% csrf_token %}  
+                    <div style="margin-top:5px">
+                        <input type="text" name="team">
+                    </div>
+                    <div style="margin-top:5px">
+                        {% buttons %}
+                            <button type="submit" class="btn btn-primary">
+                                Submit
+                            </button>
+                        {% endbuttons %}
+                    </div>
+                </form>
+
+                <div>
+                    {% if game_object %}
+                    {% render_table game_object %}
+                    {% endif %}
+                </div>
+            </div>
+
+        </div>
+        
+    </body>
+</html>
