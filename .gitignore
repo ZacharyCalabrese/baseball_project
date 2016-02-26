@@ -64,5 +64,5 @@ target/
 baseball_project/settings.py
 
 team_load.py
-single_game.py
+single_day.py
 
