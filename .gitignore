@@ -62,3 +62,7 @@ target/
 .ipynb_checkpoints
 *.pyc
 baseball_project/settings.py
+
+team_load.py
+single_game.py
+
