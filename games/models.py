@@ -1,6 +1,7 @@
 from __future__ import unicode_literals
 
 from django.db import models
+from teams.models import Team
 
 class Game(models.Model):
     game_type = models.CharField(max_length=5, )
@@ -78,7 +79,8 @@ class HomeRun(models.Model):
     number = models.IntegerField(null=True)
     name_display_roster = models.TextField(max_length=200, null=True)
     first = models.TextField(max_length=200, null=True)
-
+    
+    team = models.ForeignKey('teams.Team', to_field='team_code', null=True)
     game = models.ForeignKey(Game, on_delete=models.CASCADE)
 
 class WinningPitcher(models.Model):

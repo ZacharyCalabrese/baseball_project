@@ -16,38 +16,37 @@
 
 {% block title %}Box Score{% endblock %}
 {% block content %}
-        <div class="container-fluid">
-            <div class="col-sm-3 col-md-6">
-                <div>
-                    {% if winning_pitcher_object %}
-                    <div class="page-header">
-                          <h2>Winning Pitcher</h2>
-                    </div>
-                    {% render_table winning_pitcher_object %}
-                    {% endif %}
-
-                    {% if losing_pitcher_object %}
-                    <div class="page-header">
-                          <h2>Losing Pitcher</h2>
-                    </div>
-                    {% render_table losing_pitcher_object %}
-                    {% endif %}
-
-                    {% if saving_pitcher_object %}
-                    <div class="page-header">
-                          <h2>Saving Pitcher</h2>
-                    </div>
-                    {% render_table saving_pitcher_object %}
-
-                    {% endif %}
-                    {% if home_run_object %}
-                    <div class="page-header">
-                          <h2>Homeruns</h2>
-                    </div>
-                    {% render_table home_run_object %}
-                    {% endif %}
+    <div class="container-fluid">
+        <div class="col-sm-3 col-md-6">
+            <div>
+                {% if winning_pitcher_object %}
+                <div class="page-header">
+                      <h2>Winning Pitcher</h2>
                 </div>
-            </div>
+                {% render_table winning_pitcher_object %}
+                {% endif %}
 
+                {% if losing_pitcher_object %}
+                <div class="page-header">
+                      <h2>Losing Pitcher</h2>
+                </div>
+                {% render_table losing_pitcher_object %}
+                {% endif %}
+
+                {% if saving_pitcher_object %}
+                <div class="page-header">
+                      <h2>Saving Pitcher</h2>
+                </div>
+                {% render_table saving_pitcher_object %}
+
+                {% endif %}
+                {% if home_run_object %}
+                <div class="page-header">
+                      <h2>Homeruns</h2>
+                </div>
+                {% render_table home_run_object %}
+                {% endif %}
+            </div>
         </div>
-        {% endblock %}
+    </div>
+{% endblock %}
