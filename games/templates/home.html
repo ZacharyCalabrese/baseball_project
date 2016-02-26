@@ -1,3 +1,4 @@
+{% extends 'base.html' %}
 {% load render_table from django_tables2 %}
 {% load staticfiles %}
 
@@ -12,11 +13,9 @@
 {% bootstrap_messages %}
 
 <!doctype html>
-<html>
-    <head>
-        <title>Games</title>
-    </head>
-    <body>
+
+{% block title %}Games{% endblock %}
+{% block content %}
         <div class="container-fluid">
             <div class="col-sm-3 col-md-6">
                 {% if search_error %}
@@ -44,6 +43,4 @@
             </div>
 
         </div>
-        
-    </body>
-</html>
+        {% endblock %}

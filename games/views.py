@@ -3,8 +3,8 @@ from django_tables2   import RequestConfig
 from django.http import HttpResponse
 from django.db.models import Q
 from django.template.loader import render_to_string
-from models import Game
-from tables import GameTable
+from models import Game, HomeRun
+from tables import GameTable, HomeRunTable
 
 def home_page(request):
     return render(request, 'home.html')
@@ -20,3 +20,13 @@ def search(request):
             return render(request, 'home.html',{'game_object': table})
     
     return render(request, 'home.html', {'search_error': True})
+
+def home_runs(request, kwargs):
+    print kwargs
+    home_run_object = HomeRun.objects.filter(game__id = kwargs)
+    table = HomeRunTable(home_run_object)
+    RequestConfig(request).configure(table)
+    if home_run_object:
+        print 'here'
+        return render(request, 'home.html',{'game_object': table})
+    return render(request, 'home.html')

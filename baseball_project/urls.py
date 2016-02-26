@@ -18,7 +18,9 @@ from django.contrib import admin
 from games import views
 
 urlpatterns = [
-    url(r'^$', views.home_page, name='games'),
-    url(r'^games/search/', views.search, name='games'),
+    #url(r'^$', views.home_page, name='games'),
+    url(r'^games/search/', views.search, name='games_search'),
+    url(r'^games/homeruns/(\d+)/', views.home_runs, name='homeruns'),
+    url(r'^games/', views.home_page, name='games'),
     url(r'^admin/', admin.site.urls),
 ]
