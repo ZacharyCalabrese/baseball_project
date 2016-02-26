@@ -1,0 +1,53 @@
+{% extends 'base.html' %}
+{% load render_table from django_tables2 %}
+{% load staticfiles %}
+
+{# Load the tag library #}
+{% load bootstrap3 %}
+
+{# Load CSS and JavaScript #}
+{% bootstrap_css %}
+{% bootstrap_javascript %}
+
+{# Display django.contrib.messages as Bootstrap alerts #}
+{% bootstrap_messages %}
+
+<!doctype html>
+
+{% block title %}Box Score{% endblock %}
+{% block content %}
+        <div class="container-fluid">
+            <div class="col-sm-3 col-md-6">
+                <div>
+                    {% if winning_pitcher_object %}
+                    <div class="page-header">
+                          <h2>Winning Pitcher</h2>
+                    </div>
+                    {% render_table winning_pitcher_object %}
+                    {% endif %}
+
+                    {% if losing_pitcher_object %}
+                    <div class="page-header">
+                          <h2>Losing Pitcher</h2>
+                    </div>
+                    {% render_table losing_pitcher_object %}
+                    {% endif %}
+
+                    {% if saving_pitcher_object %}
+                    <div class="page-header">
+                          <h2>Saving Pitcher</h2>
+                    </div>
+                    {% render_table saving_pitcher_object %}
+
+                    {% endif %}
+                    {% if home_run_object %}
+                    <div class="page-header">
+                          <h2>Homeruns</h2>
+                    </div>
+                    {% render_table home_run_object %}
+                    {% endif %}
+                </div>
+            </div>
+
+        </div>
+        {% endblock %}

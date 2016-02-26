@@ -3,9 +3,11 @@ import time
 import json
 import urllib2
 import django
+import os
+os.environ.setdefault("DJANGO_SETTINGS_MODULE", "baseball_project.settings")
 django.setup()
 
-from games.models import Game, HomeRun
+from games.models import Game, HomeRun, WinningPitcher, LosingPitcher, SavingPitcher
 from dateutil import parser
 
 base_url = "http://mlb.mlb.com/gdcross/components/game/mlb/year_{year}/month_{month}/day_{day}/master_scoreboard.json"
@@ -70,11 +72,32 @@ def add_game_to_db(game):
                     setattr(new_game, k, None)
         elif k == 'home_runs':
             home_runs_object = v 
+        elif k == 'winning_pitcher':
+            winning_pitcher_object = v
+        elif k == 'losing_pitcher':
+            losing_pitcher_object = v
+        elif k == 'save_pitcher':
+            saving_pitcher_object = v
 
     new_game.save()
     try:
         add_home_runs_to_game(new_game, home_runs_object)
-    except UnboundLocalError:
+    except UnboundLocalError as e:
+        pass
+
+    try:
+        add_pitcher_to_game(new_game, winning_pitcher_object, 'winning')
+    except UnboundLocalError as e:
+        pass
+
+    try:
+        add_pitcher_to_game(new_game, losing_pitcher_object, 'losing')
+    except UnboundLocalError as e:
+        pass
+
+    try:
+        add_pitcher_to_game(new_game, saving_pitcher_object, 'saving')
+    except UnboundLocalError as e:
         pass
 
 def add_home_runs_to_game(game, home_run_object):
@@ -84,12 +107,16 @@ def add_home_runs_to_game(game, home_run_object):
         new_home_run = HomeRun()
         setattr(new_home_run, 'game', game)
         for k, v in home_run.iteritems():
-            print k, v
             if k in home_run_field_names and k != 'id':
                 if v == 'null' or v == '':
                     setattr(new_home_run, k, None)
                 else:
                     setattr(new_home_run, k, v)
+            elif k == 'id':
+                if v != '':
+                    setattr(new_home_run, 'player_id', v)
+                else:
+                    setattr(new_home_run, 'player_id', 0)
         new_home_run.save()
 
     home_runs = home_run_object['player']
@@ -100,5 +127,35 @@ def add_home_runs_to_game(game, home_run_object):
         for home_run in home_runs:
             add_home_run_to_game(home_run) 
 
+def add_pitcher_to_game(game, pitcher_object, type):
+    if type == 'winning':
+        field_names = WinningPitcher._meta.get_fields()
+        new_pitcher = WinningPitcher()
+    elif type == 'losing':
+        field_names = LosingPitcher._meta.get_fields()
+        new_pitcher = LosingPitcher()
+    elif type == 'saving':
+        field_names = SavingPitcher._meta.get_fields()
+        new_pitcher = SavingPitcher()
+
+    field_names = [f.name for f in field_names]
+    
+    setattr(new_pitcher, 'game', game)
+    for k, v in pitcher_object.iteritems():
+        if k in field_names and k != 'id':
+            if v == 'null' or v == '':
+                setattr(new_pitcher, k, None)
+            elif v == '-':
+                setattr(new_pitcher, k, None)
+            else:
+                setattr(new_pitcher, k, v)
+        elif k == 'id':
+            if v != '':
+                setattr(new_pitcher, 'player_id', v)
+            else:
+                setattr(new_pitcher, 'player_id', 0)
+
+    new_pitcher.save()
+        
 if __name__ == '__main__':
     load_month(4, 2015)

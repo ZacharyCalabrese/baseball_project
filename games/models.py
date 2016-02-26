@@ -68,6 +68,7 @@ class Game(models.Model):
     #broadcast#status
 
 class HomeRun(models.Model):
+    player_id = models.IntegerField(null=True)
     std_hr = models.IntegerField(null=True)
     hr = models.IntegerField(null=True)
     last = models.TextField(max_length=200)
@@ -78,4 +79,43 @@ class HomeRun(models.Model):
     name_display_roster = models.TextField(max_length=200, null=True)
     first = models.TextField(max_length=200, null=True)
 
+    game = models.ForeignKey(Game, on_delete=models.CASCADE)
+
+class WinningPitcher(models.Model):
+    player_id = models.IntegerField(null=True)
+    last = models.TextField(max_length=200, null=True)
+    losses = models.IntegerField(null=True)
+    era = models.DecimalField(null=True, decimal_places=2, max_digits=6)
+    number = models.IntegerField(null=True)
+    name_display_roster = models.TextField(max_length=200, null=True)
+    first = models.TextField(max_length=200, null=True)
+    wins = models.IntegerField(null=True)
+    
+    game = models.ForeignKey(Game, on_delete=models.CASCADE)
+
+class LosingPitcher(models.Model):
+    player_id = models.IntegerField(null=True)
+
+    last = models.TextField(max_length=200, null=True)
+    losses = models.IntegerField(null=True)
+    era = models.DecimalField(null=True, decimal_places=2, max_digits=6)
+    number = models.IntegerField(null=True)
+    name_display_roster = models.TextField(max_length=200, null=True)
+    first = models.TextField(max_length=200, null=True)
+    wins = models.IntegerField(null=True)
+    
+    game = models.ForeignKey(Game, on_delete=models.CASCADE)
+
+class SavingPitcher(models.Model):
+    player_id = models.IntegerField(null=True)
+    last = models.TextField(max_length=200, null=True)
+    saves = models.IntegerField(null=True)
+    losses = models.IntegerField(null=True)
+    era = models.DecimalField(null=True, decimal_places=2, max_digits=6)
+    name_display_roster = models.TextField(max_length=200, null=True)
+    number = models.IntegerField(null=True)
+    svo = models.IntegerField(null=True)
+    first = models.TextField(max_length=200, null=True)
+    wins = models.IntegerField(null=True)
+    
     game = models.ForeignKey(Game, on_delete=models.CASCADE)
