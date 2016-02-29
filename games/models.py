@@ -123,3 +123,9 @@ class SavingPitcher(models.Model):
     wins = models.IntegerField(null=True)
     
     game = models.ForeignKey(Game, on_delete=models.CASCADE)
+
+class Linescore(models.Model):
+    inning = models.IntegerField(null=False)
+    runs_scored = models.IntegerField(null=False)
+    game = models.ForeignKey(Game, on_delete=models.CASCADE)
+    team = models.ForeignKey('teams.Team', to_field='team_id', null=True)

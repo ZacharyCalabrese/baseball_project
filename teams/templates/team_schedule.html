@@ -1,0 +1,72 @@
+{% extends 'base.html' %}
+{% load render_table from django_tables2 %}
+{% load staticfiles %}
+
+{# Load the tag library #}
+{% load bootstrap3 %}
+
+{# Load CSS and JavaScript #}
+{% bootstrap_css %}
+{% bootstrap_javascript %}
+
+{# Display django.contrib.messages as Bootstrap alerts #}
+{% bootstrap_messages %}
+
+<!doctype html>
+
+{% block title %}Teams{% endblock %}
+{% block content %}
+    <div class="container-fluid">
+        <div class="pagination">
+            <span class="step-links">
+            {% if teams_objects.has_previous %}
+            <a href="?page={{ teams_objects.previous_page_number }}">previous</a>
+            {% endif %}
+
+            <span class="current">
+            Page {{ teams_objects.number }} of {{ teams_objects.paginator.num_pages }}.
+            </span>
+
+            {% if teams_objects.has_next %}
+            <a href="?page={{ teams_objects.next_page_number }}">next</a>
+            {% endif %}
+            </span>
+        </div>
+
+            <div class="col-md-2">
+
+                <form action="/teams/{{ team_id }}/schedules/" method="get">
+                    {% csrf_token %}
+                    <div class="form-group">
+                        <label>Year</label>
+                            <select class="form-control" id="year" name="year">
+                                <option>2016</option>
+                                <option>2015</option>
+                                <option>2014</option>
+                                <option>2013</option>
+                            </select>
+                    </div>
+                    <div style="margin-top:5px">
+                        {% buttons %}
+                        <button type="submit" class="btn btn-primary">
+                            Submit
+                        </button>
+                        {% endbuttons %}
+                    </div>
+                </form>
+            </div>
+
+        <div class="col-md-12">
+            {% for teams_object in teams_objects %}
+                {% if teams_object %}
+                <div class="page-header">
+                    <h2>{{ team_name }} Schedule</h2>
+                </div>
+                <div class="table-responsive">
+                {% render_table teams_object %}
+                </div>
+                {% endif %}
+            {% endfor %}
+        </div>
+    </div>
+{% endblock %}
