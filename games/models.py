@@ -7,7 +7,7 @@ class Game(models.Model):
     game_type = models.CharField(max_length=5, )
     double_header_sw = models.CharField(max_length=5, )
     location = models.TextField(max_length=100, )
-    away_time = models.TimeField()
+    away_time = models.TimeField(null=True)
     time = models.TimeField()
     home_time = models.TimeField()
     home_team_name = models.TextField(max_length=100, )
@@ -22,7 +22,7 @@ class Game(models.Model):
     home_games_back_wildcard = models.CharField(max_length=5, null=True)
 
     # Foreign reference eventually
-    away_team_id = models.IntegerField(null=True)
+    away_team_id = models.ForeignKey('teams.Team', to_field='team_id', null=True, related_name="away_team_games")
     home_loss = models.IntegerField(default=0, null=False)
     home_games_back = models.CharField(max_length=5, null=True)
     home_code = models.CharField(max_length=3, null=True)
@@ -35,9 +35,9 @@ class Game(models.Model):
     home_file_code = models.CharField(max_length=5, null=True)
     away_split_squad = models.CharField(max_length=5, null=True)
     time_zone = models.CharField(max_length=5, null=True)
-    home_team_id = models.IntegerField()
+    home_team_id = models.ForeignKey('teams.Team', to_field='team_id', null=True, related_name="home_team_games")
     day = models.CharField(max_length=3, null=True)
-    time_aw_lg = models.TimeField()
+    time_aw_lg = models.TimeField(null=True)
     away_team_city = models.TextField(max_length=100)
     away_code = models.CharField(max_length=5, null=True)
     away_games_back_wildcard = models.CharField(max_length=5, null=True)
@@ -61,6 +61,8 @@ class Game(models.Model):
     away_division = models.CharField(max_length=5, null=True)
 
 
+    #away_team = 
+    #home_team = 
     #losing pitcher
     #homeruns
     #linescore

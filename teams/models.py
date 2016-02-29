@@ -10,7 +10,7 @@ class Team(models.Model):
     club_full_name = models.TextField(null=True)
     url_prod = models.TextField(null=True)
     dc_site = models.TextField(null=True)
-    team_id = models.IntegerField(null=True)
+    team_id = models.IntegerField(unique=True, null=True)
     postal_code = models.TextField(null=True)
     instagram_id = models.IntegerField(null=True)
     timezone = models.TextField(null=True)
