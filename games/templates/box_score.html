@@ -17,8 +17,15 @@
 {% block title %}Box Score{% endblock %}
 {% block content %}
     <div class="container-fluid">
-        <div class="col-sm-3 col-md-6">
+        <div class="col-sm-6">
             <div>
+                {% if box_score_object %}
+                <div class="page-header">
+                    <h2>Box Score</h2>
+                </div>
+                {% render_table box_score_object %}
+                {% endif %}
+
                 {% if winning_pitcher_object %}
                 <div class="page-header">
                       <h2>Winning Pitcher</h2>
