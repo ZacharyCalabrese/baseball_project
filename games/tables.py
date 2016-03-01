@@ -1,5 +1,5 @@
 import django_tables2 as tables
-from models import Game, HomeRun, WinningPitcher, LosingPitcher, SavingPitcher, Linescore
+from models import Game, HomeRun, WinningPitcher, LosingPitcher, SavingPitcher, Inning
 from django_tables2.utils import A
 
 class GameTable(tables.Table):
@@ -14,8 +14,6 @@ class GameTable(tables.Table):
             empty_values=(), accessor='id')
 
     class Meta:
-        #model = Game
-        # add class="paleblue" to <table> tag
         attrs = {"class": "table-striped table-bordered table-condensed table-responsive"}
 
 class HomeRunTable(tables.Table):
@@ -25,8 +23,7 @@ class HomeRunTable(tables.Table):
     runners = tables.Column(accessor="runners", verbose_name="Runners on")
     numbers = tables.Column(accessor="number", verbose_name="Player number")
     class Meta:
-        model = HomeRun 
-        # add class="paleblue" to <table> tag
+        #model = HomeRun 
         attrs = {"class": "table-striped table-bordered table-condensed table-responsive"}
 
 class WinningPitcherTable(tables.Table):
@@ -49,7 +46,7 @@ class SavingPitcherTable(tables.Table):
         model = SavingPitcher
         attrs = {"class": "table-striped table-bordered table-condensed table-responsive"}
 
-class LinescoreTable(tables.Table):
+class InningsTable(tables.Table):
     #inning_one = tables.Column(accessor="1", verbose_name="1")
     class Meta:
         pass
